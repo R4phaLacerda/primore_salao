@@ -1,4 +1,4 @@
-import UserModel from "../models/userModel.js";
+import ClientModel from "../models/ClientModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -6,7 +6,7 @@ class AuthController {
   // Listar todos os usuários
   async getAllUsers(req, res) {
     try {
-      const users = await UserModel.findAll();
+      const users = await ClientModel.findAll();
       res.json(users);
     } catch (error) {
       console.error("Erro ao listar usuários:", error);
@@ -27,7 +27,7 @@ class AuthController {
       }
 
       // Verificar se o usuário já existe
-      const userExists = await UserModel.findByEmail(email);
+      const userExists = await ClientModel.findByEmail(email);
       if (userExists) {
         return res.status(400).json({ error: "Este email já está em uso!" });
       }
@@ -43,7 +43,7 @@ class AuthController {
       };
 
       // Criar usuário
-      const user = await UserModel.create(data);
+      const user = await ClientModel.create(data);
 
       return res.status(201).json({
         message: "Usuário criado com sucesso!",
@@ -67,7 +67,7 @@ class AuthController {
       }
 
       // Verificar se o usuário existe
-      const userExists = await UserModel.findByEmail(email);
+      const userExists = await ClientModel.findByEmail(email);
       if (!userExists) {
         return res.status(401).json({ error: "Credenciais inválidas!" });
       }
